@@ -1,6 +1,5 @@
 package com.klinkanha.assignment.model;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobRequest {
-    @Valid
-    private List<@Pattern(regexp = "") String> filterBy;
-
-    private List<String> fields;
-    private List<String> sortBy;
-    private Boolean sortDescending;
+    private List<@Pattern(regexp = allowFieldPattern, message = errorMessage) String> fields;
+    private List<@Pattern(regexp = allowFieldPattern, message = errorMessage) String> sortBy;
+    private Boolean sortDescending = false;
     private int size = 20;
+
+    private static final String allowFieldPattern = "(job_title|salary|gender)";
+    private static final String errorMessage = "must be one of job_title, salary, gender";
 }

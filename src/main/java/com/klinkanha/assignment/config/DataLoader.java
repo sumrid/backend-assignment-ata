@@ -33,7 +33,7 @@ public class DataLoader {
         log.info("Loaded {} jobs from CSV", jobs.size());
 
         for (JobCsvBean job : jobs) {
-            var salaryNumber = BigDecimal.ZERO;
+            BigDecimal salaryNumber = null;
             if (StringUtils.isNoneEmpty(job.getSalaryNumber())) {
                 salaryNumber = new BigDecimal(job.getSalaryNumber());
             }
@@ -45,8 +45,9 @@ public class DataLoader {
                     .setYearsOfExperience(job.getYearsOfExperience())
                     .setSigningBonus(job.getSigningBonus())
                     .setAnnualBonus(job.getAnnualBonus())
-                    .setSalary(job.getSalary())
-                    .setSalaryNumber(salaryNumber)
+                    .setSalaryRaw(job.getSalary())
+                    .setSalary(salaryNumber)
+                    .setGender(job.getGender())
                     .setCurrency(job.getCurrency())
             );
         }

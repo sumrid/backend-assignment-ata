@@ -44,11 +44,11 @@ public class JobEntity {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "salary")
-    private String salary;
+    @Column(name = "salary_raw")
+    private String salaryRaw;
 
-    @Column(name = "salary_number")
-    private BigDecimal salaryNumber;
+    @Column(name = "salary")
+    private BigDecimal salary;
 
     @Column(name = "currency")
     private String currency;

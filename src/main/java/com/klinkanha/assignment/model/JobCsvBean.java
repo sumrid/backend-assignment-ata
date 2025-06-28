@@ -29,6 +29,9 @@ public class JobCsvBean {
     @CsvBindByName(column = "annual_bonus")
     private String annualBonus;
 
+    @CsvBindByName(column = "gender")
+    private String gender;
+
     @CsvBindByName(column = "salary")
     private String salary;
 
