@@ -11,10 +11,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,8 +29,8 @@ public class DataLoader {
     @EventListener(ApplicationReadyEvent.class)
     public void loadJobs() {
         // read csv to object
-        var filePath = Objects.requireNonNull(getClass().getClassLoader().getResource("data/survey.csv")).getPath();
-        var jobs = parseCsv(Path.of(filePath), JobCsvBean.class);
+        var file = Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("data/survey.csv"));
+        var jobs = parseCsv(file, JobCsvBean.class);
         log.info("Loaded {} jobs from CSV", jobs.size());
 
         for (JobCsvBean job : jobs) {
@@ -54,8 +55,8 @@ public class DataLoader {
         log.info("Loaded {} jobs into database", jobs.size());
     }
 
-    private <T> List<T> parseCsv(Path path, Class<T> type) {
-        try (var reader = Files.newBufferedReader(path)) {
+    private <T> List<T> parseCsv(InputStream inputStream, Class<T> type) {
+        try (var reader = new BufferedReader(new InputStreamReader(inputStream))) {
             var csvParser = new CsvToBeanBuilder<T>(reader)
                     .withType(type)
                     .build();

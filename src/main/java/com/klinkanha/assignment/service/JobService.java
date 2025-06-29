@@ -74,7 +74,10 @@ public class JobService {
                     prediction.add(cb.equal(jobs.get(fieldCamel), filter.getValue()));
                     break;
                 case "like":
-                    prediction.add(cb.like(jobs.get(fieldCamel), "%" + filter.getValue() + "%"));
+                    prediction.add(cb.like(
+                            cb.lower(jobs.get(fieldCamel)),
+                            "%" + filter.getValue().toLowerCase() + "%"
+                    ));
             }
         }
         query.where(prediction.toArray(new Predicate[0]));
