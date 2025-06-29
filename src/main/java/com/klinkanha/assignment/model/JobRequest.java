@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class JobRequest {
     private List<@Pattern(regexp = allowFieldPattern, message = errorMessage) String> fields;
     private List<@Pattern(regexp = allowFieldPattern, message = errorMessage) String> sortBy;
